@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DREAMORA — Your Dreams. Your World. Your Reality.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#10172C;--purple:#8065FF;--cyan:#54D9E8;--cloud:#F2E9FF;--panel:rgba(16,23,44,.72);--line:rgba(242,233,255,.16);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:70px}
+body{margin:0;background:var(--navy);color:var(--cloud);font:16px/1.55 "Bricolage Grotesque",system-ui,sans-serif}
+a{color:inherit}button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+header{position:sticky;top:0;z-index:20;display:flex;gap:16px;align-items:center;padding:12px 24px;background:rgba(16,23,44,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;letter-spacing:.14em;text-decoration:none;background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
+nav a{padding:6px 12px;border-radius:99px;text-decoration:none;white-space:nowrap;opacity:.8}
+nav a.on,nav a:hover{background:rgba(128,101,255,.25);opacity:1}
+select,input,textarea{background:rgba(242,233,255,.07);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+select option{background:var(--navy)}
+.btn{border:0;border-radius:99px;padding:12px 24px;font-weight:600;cursor:pointer;background:linear-gradient(90deg,var(--purple),#6f8bff);color:#fff;box-shadow:0 0 28px rgba(128,101,255,.45);text-decoration:none;display:inline-block}
+.btn.g{background:transparent;border:1px solid var(--line);box-shadow:none}
+.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden}
+#heroCv{position:absolute;inset:0}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,23,44,.92),rgba(16,23,44,.35) 60%,transparent);pointer-events:none}
+.hero .in{position:relative;z-index:2;padding:48px 24px 48px max(24px,6vw);max-width:720px}
+h1{font-size:clamp(2.6rem,7vw,5.6rem);line-height:.98;font-weight:800;margin:0 0 20px;letter-spacing:-.03em}
+h2{font-size:1.9rem;margin:0 0 16px;letter-spacing:-.02em}
+.sec{padding:56px max(24px,6vw);max-width:1200px;margin:auto}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px}
+.thumb{height:110px;border-radius:14px;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:none;border-radius:99px;padding:6px 14px;cursor:pointer}
+.chip.on{background:var(--purple);border-color:var(--purple)}
+.muted{opacity:.7}.tag{font-size:.8rem;padding:2px 10px;border-radius:99px;background:rgba(84,217,232,.18);color:var(--cyan)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+textarea{width:100%;min-height:160px;resize:vertical}
+.bar{height:6px;border-radius:9px;background:rgba(242,233,255,.12);overflow:hidden;margin:6px 0 12px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .8s}
+pre{background:rgba(0,0,0,.35);padding:12px;border-radius:12px;overflow:auto;font-size:.82rem}
+.err{color:#ff9aa8}
+#play{position:fixed;inset:0;z-index:50;background:#000;display:none}
+#play.on{display:block}
+#hud{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));left:12px;right:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;z-index:2}
+#hud .p{background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.85rem;cursor:pointer}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--purple);padding:10px 20px;border-radius:99px;z-index:99;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.on{opacity:1}
+#dlg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;display:none;align-items:center;justify-content:center}
+#dlg.on{display:flex}#dlg .card{background:var(--navy);max-width:360px}
+footer{padding:32px;text-align:center;opacity:.6;border-top:1px solid var(--line)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><a class="logo" href="#home">DREAMORA</a><nav id="nav"></nav><select id="lang" aria-label="Language"></select></header>
+<main id="app"></main>
+<div id="play"><div id="hud"></div></div>
+<div id="toast" role="status"></div><div id="dlg"><div class="card"><p id="dmsg"></p><div class="row"><button class="btn" id="dok">OK</button><button class="btn g" id="dno">Cancel</button></div></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+/* ---------- storage (per-viewer, guarded) ---------- */
+const mem={};const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return k in mem?mem[k]:d}},set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+/* ---------- i18n ---------- */
+const K="home|create|explore|worlds|together|avatar|plans|profile|cta|enter|generate|save|tag".split("|");
+const L={en:["English","Home|Create|Explore|My Worlds|Together|Avatar|Plans|Profile|Create Your Dream|Enter world|Generate dream|Save|Your Dreams. Your World. Your Reality."],
+uz:["Oʻzbekcha","Bosh sahifa|Yaratish|Kashf etish|Dunyolarim|Birga|Avatar|Tariflar|Profil|Orzuingni yarat|Dunyoga kirish|Orzuni yaratish|Saqlash|Orzularingiz. Dunyoyingiz. Haqiqatingiz."],
+ru:["Русский","Главная|Создать|Обзор|Мои миры|Вместе|Аватар|Тарифы|Профиль|Создай мечту|Войти в мир|Создать мечту|Сохранить|Твои мечты. Твой мир. Твоя реальность."],
+ko:["한국어","홈|만들기|탐색|내 세계|함께|아바타|요금제|프로필|꿈 만들기|세계 입장|꿈 생성|저장|당신의 꿈. 당신의 세계. 당신의 현실."],
+ja:["日本語","ホーム|作成|探索|マイワールド|一緒に|アバター|プラン|プロフィール|夢を作る|ワールドに入る|夢を生成|保存|あなたの夢。あなたの世界。あなたの現実。"],
+zh:["中文","首页|创建|探索|我的世界|一起|形象|会员|个人资料|创造你的梦|进入世界|生成梦境|保存|你的梦想。你的世界。你的现实。"],
+es:["Español","Inicio|Crear|Explorar|Mis mundos|Juntos|Avatar|Planes|Perfil|Crea tu sueño|Entrar al mundo|Generar sueño|Guardar|Tus sueños. Tu mundo. Tu realidad."],
+fr:["Français","Accueil|Créer|Explorer|Mes mondes|Ensemble|Avatar|Offres|Profil|Créez votre rêve|Entrer dans le monde|Générer le rêve|Enregistrer|Vos rêves. Votre monde. Votre réalité."],
+de:["Deutsch","Start|Erstellen|Entdecken|Meine Welten|Gemeinsam|Avatar|Tarife|Profil|Traum erschaffen|Welt betreten|Traum generieren|Speichern|Deine Träume. Deine Welt. Deine Realität."],
+ar:["العربية","الرئيسية|إنشاء|استكشاف|عوالمي|معًا|الأفاتار|الباقات|الملف|اصنع حلمك|ادخل العالم|ولّد الحلم|حفظ|أحلامك. عالمك. واقعك."],
+tr:["Türkçe","Ana sayfa|Oluştur|Keşfet|Dünyalarım|Birlikte|Avatar|Planlar|Profil|Hayalini yarat|Dünyaya gir|Hayali üret|Kaydet|Hayallerin. Dünyan. Gerçeğin."],
+pt:["Português","Início|Criar|Explorar|Meus mundos|Juntos|Avatar|Planos|Perfil|Crie seu sonho|Entrar no mundo|Gerar sonho|Salvar|Seus sonhos. Seu mundo. Sua realidade."],
+hi:["हिन्दी","होम|बनाएँ|खोजें|मेरे संसार|साथ में|अवतार|प्लान|प्रोफ़ाइल|अपना सपना बनाएँ|संसार में जाएँ|सपना बनाएँ|सहेजें|आपके सपने। आपकी दुनिया। आपकी हकीकत।"],
+it:["Italiano","Home|Crea|Esplora|I miei mondi|Insieme|Avatar|Piani|Profilo|Crea il tuo sogno|Entra nel mondo|Genera il sogno|Salva|I tuoi sogni. Il tuo mondo. La tua realtà."]};
+let lang=ls.get("dm:lang","en");if(!L[lang])lang="en";
+const T=k=>L[lang][1].split("|")[K.indexOf(k)];
+/* ---------- helpers ---------- */
+let tt;const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2600)};
+const ask=(m,ok)=>{$("#dmsg").textContent=m;$("#dlg").classList.add("on");$("#dok").onclick=()=>{$("#dlg").classList.remove("on");ok()};$("#dno").onclick=()=>$("#dlg").classList.remove("on")};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ATMO={dawn:{sky:0xf0c4d8,sun:0xffd9b0,i:1.1},twilight:{sky:0x5b3f9e,sun:0xb9a0ff,i:.9},midnight:{sky:0x070b1e,sun:0x7fb4ff,i:.35},golden:{sky:0xf5d08a,sun:0xffc46b,i:1.2}};
+const grad=a=>{const c=ATMO[a]||ATMO.twilight;const h="#"+c.sky.toString(16).padStart(6,"0");return `linear-gradient(160deg,${h},#8065FF 70%,#54D9E8)`};
+/* ---------- AI layer (modular; no key in client) ---------- */
+const COL={yellow:"#f5c400",sariq:"#f5c400",red:"#d62828",qizil:"#d62828",blue:"#2a6fdb",green:"#2e9e4f",black:"#1b1b1b",qora:"#1b1b1b",white:"#f2f2f2",pink:"#ff7eb6",purple:"#8065ff",orange:"#ff8a1f"};
+const OBJ=t=>{const c=(Object.keys(COL).find(k=>t.includes(k))||"");const col=COL[c]||"#8065ff",R={car:/car|lambo|ferrari|mashina|машин|автомоб/,house:/house|home|villa|\buy\b|дом/,castle:/castle|palace|qasr|замок/,boat:/boat|yacht|ship|qayiq|лодк/,lamp:/lamp|chiroq/};return Object.keys(R).filter(k=>R[k].test(t)).slice(0,4).map(type=>({type,color:col}))};
+const AI={endpoint:"/api/dream",
+async interpret(text,o){try{const r=await fetch(AI.endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,...o})});if(r.status===503)return AI.local(text,o);if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||"AI service error "+r.status)}return r.json()}catch(e){if(e instanceof TypeError)return AI.local(text,o);throw e}},
+local(text,o){const t=text.toLowerCase(),has=r=>r.test(t);const biomes=[];
+has(/ocean|lake|beach|river|sea|island|water|lagoon/)&&biomes.push("water");has(/forest|tree|jungle|garden|park/)&&biomes.push("forest");has(/sky|float|fly|cloud|castle|fantasy|magic|dragon/)&&biomes.push("floating islands");has(/mountain|snow|alp|cliff/)&&biomes.push("mountains");has(/city|tower|neon|street/)&&biomes.push("towers");
+if(!biomes.length)biomes.push("forest","mountains");
+let atmo=o.atmo;if(atmo==="auto")atmo=has(/night|space|star|moon/)?"midnight":has(/sunset|golden|desert/)?"golden":has(/morning|dawn|spring/)?"dawn":"twilight";
+return{title:text.trim().split(/\s+/).slice(0,4).join(" "),category:o.cat,atmosphere:atmo,biomes,trees:biomes.includes("forest")?1:.4,water:biomes.includes("water"),islands:biomes.includes("floating islands"),towers:biomes.includes("towers"),language:o.lang,objects:OBJ(t),source:"local keyword reader (demo mode)"}}};
+/* ---------- 3D world ---------- */
+let R,S,CAM,W,sun,hemi,plan={atmosphere:"twilight",trees:1,water:true,islands:true,towers:false},floaters=[],mode="preview",view="third",qual=ls.get("dm:q","high"),yaw=0,pitch=.35,keys={},P={x:0,y:0,z:8,vy:0,g:true},av,gl=true;
+const H=(x,z)=>{const d=Math.hypot(x,z);return 2.5*Math.sin(x*.06)*Math.cos(z*.05)+1.2*Math.sin(x*.15+z*.11)+Math.max(0,d-38)*.45-1.2-4*Math.exp(-((x+14)**2+(z-12)**2)/150)};
+const QS={low:{pr:1,sh:0,n:.4,m:1024},medium:{pr:1.5,sh:0,n:.7,m:1024},high:{pr:2,sh:1,n:1,m:1024},ultra:{pr:3,sh:1,n:1.4,m:2048}};
+function init(){try{R=new THREE.WebGLRenderer({antialias:true});}catch(e){gl=false;return}
+S=new THREE.Scene();CAM=new THREE.PerspectiveCamera(60,1,.1,600);hemi=new THREE.HemisphereLight(0xffffff,0x334466,.7);S.add(hemi);
+sun=new THREE.DirectionalLight(0xffffff,1);sun.position.set(40,60,20);const s=sun.shadow.camera;s.left=s.bottom=-60;s.right=s.top=60;s.far=200;S.add(sun);
+W=new THREE.Group();S.add(W);av=new THREE.Group();S.add(av);setAvatar();applyQ();build(plan);addEventListener("resize",fit);R.setAnimationLoop(tick)}
+function applyQ(){const q=QS[qual];R.setPixelRatio(Math.min(devicePixelRatio,q.pr));R.shadowMap.enabled=!!q.sh;sun.castShadow=!!q.sh;sun.shadow.mapSize.set(q.m,q.m);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null}fit()}
+function fit(){const p=R.domElement.parentElement;if(!p)return;const w=p.clientWidth,h=p.clientHeight;R.setSize(w,h);CAM.aspect=w/h;CAM.updateProjectionMatrix()}
+function mount(el){if(!gl)return;el.prepend(R.domElement);R.domElement.style.cssText="width:100%;height:100%;display:block";fit()}
+function build(p){plan=p;W.children.slice().forEach(o=>{W.remove(o);o.geometry&&o.geometry.dispose()});floaters=[];const A=ATMO[p.atmosphere]||ATMO.twilight;
+S.background=new THREE.Color(A.sky);S.fog=new THREE.Fog(A.sky,60,230);sun.color.set(A.sun);sun.intensity=A.i;hemi.intensity=.35+A.i*.4;hemi.color.set(A.sky===0x070b1e?0x6677bb:0xffffff);
+const g=new THREE.PlaneGeometry(220,220,90,90);g.rotateX(-Math.PI/2);const pos=g.attributes.position,col=[];
+for(let i=0;i<pos.count;i++){const y=H(pos.getX(i),pos.getZ(i));pos.setY(i,y);const c=new THREE.Color(y<.3?0xd9c58c:y<8?0x4f9a62:y<15?0x8a8794:0xf2f4ff);c.offsetHSL(0,0,(Math.random()-.5)*.04);col.push(c.r,c.g,c.b)}
+g.setAttribute("color",new THREE.Float32BufferAttribute(col,3));g.computeVertexNormals();const t=new THREE.Mesh(g,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true}));t.receiveShadow=true;W.add(t);
+if(p.water){const w=new THREE.Mesh(new THREE.PlaneGeometry(400,400).rotateX(-Math.PI/2),new THREE.MeshStandardMaterial({color:0x54d9e8,transparent:true,opacity:.72,roughness:.15,metalness:.2}));w.position.y=0;W.add(w)}
+const n=Math.round(160*QS[qual].n*(p.trees||.3)),tr=new THREE.InstancedMesh(new THREE.CylinderGeometry(.15,.25,1.4),new THREE.MeshStandardMaterial({color:0x5a3d2b}),n),lf=new THREE.InstancedMesh(new THREE.ConeGeometry(1.2,3.2,7),new THREE.MeshStandardMaterial({color:0x2e8b57,flatShading:true}),n),m=new THREE.Matrix4();let k=0;
+for(let i=0;i<n*4&&k<n;i++){const x=(Math.random()-.5)*150,z=(Math.random()-.5)*150,y=H(x,z);if(y<.8||y>9||Math.hypot(x-P.x,z-P.z)<4)continue;const s=.7+Math.random()*.8;m.makeScale(s,s,s).setPosition(x,y+.7*s,z);tr.setMatrixAt(k,m);m.makeScale(s,s,s).setPosition(x,y+2.4*s,z);lf.setMatrixAt(k++,m)}
+tr.count=lf.count=k;tr.castShadow=lf.castShadow=true;W.add(tr,lf);
+const mk=(x,y,z,tower)=>{const G=new THREE.Group(),r=new THREE.Mesh(new THREE.ConeGeometry(7,10,7),new THREE.MeshStandardMaterial({color:0x6a6275,flatShading:true}));r.rotation.x=Math.PI;r.position.y=-5;const top=new THREE.Mesh(new THREE.CylinderGeometry(7,7,1.2,7),new THREE.MeshStandardMaterial({color:0x4f9a62,flatShading:true}));G.add(r,top);
+if(tower){const b=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.6,8,8),new THREE.MeshStandardMaterial({color:0xf2e9ff})),c=new THREE.Mesh(new THREE.ConeGeometry(2,4,8),new THREE.MeshStandardMaterial({color:0x8065ff,emissive:0x8065ff,emissiveIntensity:.9}));b.position.y=4.6;c.position.y=10.6;G.add(b,c)}
+G.position.set(x,y,z);G.userData.y=y;G.castShadow=true;W.add(G);floaters.push(G)};
+if(p.islands){mk(-25,26,-35,1);mk(30,34,-50,0);mk(55,24,15,1)}
+if(p.towers)for(let i=0;i<9;i++){const x=-30+i*7,z=-40-(i%3)*6,h=8+Math.random()*16,b=new THREE.Mesh(new THREE.BoxGeometry(4,h,4),new THREE.MeshStandardMaterial({color:0x1a2340,emissive:0x54d9e8,emissiveIntensity:.25}));b.position.set(x,Math.max(H(x,z),0)+h/2,z);W.add(b)}
+if(p.atmosphere==="midnight"){const sg=new THREE.BufferGeometry(),a=[];for(let i=0;i<600;i++){const v=new THREE.Vector3().randomDirection().multiplyScalar(300);v.y=Math.abs(v.y);a.push(v.x,v.y,v.z)}sg.setAttribute("position",new THREE.Float32BufferAttribute(a,3));W.add(new THREE.Points(sg,new THREE.PointsMaterial({size:1.4,fog:false})))}addObjs(p)}
+function dry(x,z){for(let r=0;r<50;r+=2)for(let a=0;a<6.3;a+=.7){const X=x+Math.cos(a)*r,Z=z+Math.sin(a)*r,h=H(X,Z);if(h>.6&&h<4)return[X,Z]}return[x,z]}
+function mkObj(t,c){const G=new THREE.Group(),M=(h,m)=>new THREE.MeshStandardMaterial({color:h,flatShading:true,roughness:.5,metalness:m||0}),B=(w,h,d,m,x,y,z)=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);b.position.set(x,y,z);G.add(b)};
+if(t==="car"){B(4.4,.7,1.9,M(c,.6),0,.65,0);B(2,.6,1.6,M(0x223344,.2),-.3,1.25,0);[[-1.4,.9],[1.4,.9],[-1.4,-.9],[1.4,-.9]].forEach(w=>{const h=new THREE.Mesh(new THREE.CylinderGeometry(.42,.42,.35,14),M(0x111111));h.rotation.x=Math.PI/2;h.position.set(w[0],.42,w[1]);G.add(h)})}
+else if(t==="house"){B(5,3.2,5,M(c),0,1.6,0);const r=new THREE.Mesh(new THREE.ConeGeometry(4.2,2.4,4),M(0x7a2e2e));r.position.y=4.4;r.rotation.y=Math.PI/4;G.add(r);B(1,1.8,.1,M(0x442211),0,.9,2.55)}
+else if(t==="castle"){B(5,5,5,M(c),0,2.5,0);[[-3,-3],[3,-3],[-3,3],[3,3]].forEach(q=>{const T=new THREE.Mesh(new THREE.CylinderGeometry(1,1,7,10),M(c)),K=new THREE.Mesh(new THREE.ConeGeometry(1.4,2,10),M(0x8065ff));T.position.set(q[0],3.5,q[1]);K.position.set(q[0],8,q[1]);G.add(T,K)})}
+else if(t==="boat"){B(5,.9,2,M(c),0,.45,0);B(.15,4,.15,M(0x553311),0,2.8,0);B(.1,3,2.2,M(0xf2e9ff),0,2.9,.4)}
+else if(t==="lamp"){const q=new THREE.Mesh(new THREE.CylinderGeometry(.1,.15,4,8),M(0x333333)),b=new THREE.Mesh(new THREE.SphereGeometry(.45,12,10),new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:1.2}));q.position.y=2;b.position.y=4.3;G.add(q,b)}
+else return null;return G}
+function addObjs(p){const s=dry(0,6);(p.objects||[]).slice(0,4).forEach((o,i)=>{const col=/^#[0-9a-f]{6}$/i.test(o.color)?o.color:"#8065ff",g=mkObj(o.type,col);if(!g)return;let x,z,y;if(o.type==="boat"&&p.water){x=-14+i*3;z=12;y=.1}else{const d=dry(s[0]-9+i*8,s[1]-8-(i%2)*5);x=d[0];z=d[1];y=Math.max(H(x,z),.2)}g.position.set(x,y,z);g.rotation.y=.5;g.traverse(m=>m.castShadow=true);W.add(g)})}
+function setAvatar(){const c=ls.get("dm:avatar",AV0);av.children.slice().forEach(o=>av.remove(o));const M=h=>new THREE.MeshStandardMaterial({color:h});
+const b=new THREE.Mesh(new THREE.CylinderGeometry(.4,.45,1,12),M(c.outfit)),h=new THREE.Mesh(new THREE.SphereGeometry(.38,16,12),M(c.skin)),hr=new THREE.Mesh(new THREE.SphereGeometry(.4,16,8,0,6.3,0,c.hair==="bald"?.01:c.hair==="long"?2:1.3),M(c.hairc));
+b.position.y=.9;h.position.y=1.7;hr.position.y=1.72;av.add(b,h,hr);if(c.hair==="long"){const bk=new THREE.Mesh(new THREE.BoxGeometry(.7,.9,.2),M(c.hairc));bk.position.set(0,1.3,.3);av.add(bk)}
+if(c.acc==="halo"){const o=new THREE.Mesh(new THREE.TorusGeometry(.3,.04,8,20),new THREE.MeshBasicMaterial({color:0x54d9e8}));o.rotation.x=Math.PI/2;o.position.y=2.25;av.add(o)}
+if(c.acc==="glasses"){const o=new THREE.Mesh(new THREE.BoxGeometry(.6,.12,.1),M(0x111111));o.position.set(0,1.75,-.36);av.add(o)}
+if(c.acc==="crown"){const o=new THREE.Mesh(new THREE.ConeGeometry(.3,.35,5),new THREE.MeshStandardMaterial({color:0xffd24d,emissive:0x664400}));o.position.y=2.2;av.add(o)}
+av.traverse(o=>o.castShadow=true)}
+function ground(){P.y=H(P.x,P.z)}
+const ang=(a,b)=>{let d=b-a;while(d>Math.PI)d-=6.283;while(d<-Math.PI)d+=6.283;return a+d*.2};
+let t0=performance.now(),orb=0;
+function tick(now){const dt=Math.min((now-t0)/1e3,.05);t0=now;floaters.forEach((f,i)=>f.position.y=f.userData.y+Math.sin(now/1500+i*2)*1.2);
+if(mode==="preview"){orb+=dt*.07;CAM.position.set(Math.sin(orb)*75,32,Math.cos(orb)*75);CAM.lookAt(0,8,0);av.visible=false}
+else{const f=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0),s=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0);
+if(f||s){const sp=keys.ShiftLeft||keys.ShiftRight?11:6,fx=-Math.sin(yaw),fz=-Math.cos(yaw),l=Math.hypot(f,s);const mx=(fx*f+(-fz)*s)/l,mz=(fz*f+fx*s)/l;P.x+=mx*sp*dt;P.z+=mz*sp*dt;av.rotation.y=ang(av.rotation.y,Math.atan2(mx,mz))}
+const r=Math.hypot(P.x,P.z);if(r>95){P.x*=95/r;P.z*=95/r}
+const gy=H(P.x,P.z);if(keys.Space&&P.g){P.vy=7.5;P.g=false}P.vy-=20*dt;P.y+=P.vy*dt;if(P.y<=gy){P.y=gy;P.vy=0;P.g=true}
+av.position.set(P.x,P.y,P.z);av.visible=view==="third";
+if(view==="third"){const d=7,e=Math.sin(pitch)*d,h=Math.cos(pitch)*d;CAM.position.set(P.x+Math.sin(yaw)*h,P.y+1.8+e,P.z+Math.cos(yaw)*h);CAM.lookAt(P.x,P.y+1.5,P.z)}
+else{CAM.position.set(P.x,P.y+1.7,P.z);CAM.lookAt(P.x-Math.sin(yaw)*Math.cos(pitch),P.y+1.7+Math.sin(pitch),P.z-Math.cos(yaw)*Math.cos(pitch))}}
+R.render(S,CAM)}
+addEventListener("keydown",e=>{if(mode!=="play")return;keys[e.code]=1;if(e.code==="KeyV")toggleView();if(e.code==="Space")e.preventDefault();if(e.code==="Escape")exitPlay()});
+addEventListener("keyup",e=>keys[e.code]=0);
+addEventListener("mousemove",e=>{if(mode!=="play"||!(document.pointerLockElement||e.buttons))return;yaw-=e.movementX*.003;pitch=Math.max(-1,Math.min(1.2,pitch-e.movementY*.003))});
+function toggleView(){view=view==="third"?"first":"third";hud()}
+function hud(){$("#hud").innerHTML=`<button class="p" id="hx">✕ Exit</button><button class="p" id="hv">Camera: ${view==="third"?"Third":"First"}-person (V)</button><select class="p" id="hq" aria-label="Quality">${Object.keys(QS).map(q=>`<option ${q===qual?"selected":""}>${q}</option>`).join("")}</select><span class="p">WASD move · Shift run · Space jump · drag/click to look · V camera · Esc exit</span>`;
+$("#hx").onclick=exitPlay;$("#hv").onclick=toggleView;$("#hq").onchange=e=>{qual=e.target.value;ls.set("dm:q",qual);applyQ();build(plan)}}
+function enterPlay(p){if(!gl)return toast("WebGL is not available on this device.");if(p)build(p);mode="play";{const d=dry(0,6);P.x=d[0];P.z=d[1]}ground();P.vy=0;yaw=0;pitch=.35;$("#play").classList.add("on");mount($("#play"));hud();R.domElement.onclick=()=>{try{R.domElement.requestPointerLock()}catch(e){}}}
+function exitPlay(){mode="preview";try{document.exitPointerLock()}catch(e){}$("#play").classList.remove("on");route()}
+/* ---------- data ---------- */
+const AV0={skin:"#e8b995",hair:"short",hairc:"#2b1b3a",outfit:"#8065ff",acc:"halo"};
+const SAMPLES=[["Aurora Highlands","Nature","dawn",{trees:1,water:1,islands:0}],["Skyglass Citadel","Fantasy","twilight",{trees:.5,water:1,islands:1}],["Neon Meridian","Cities","midnight",{trees:.2,water:0,towers:1,islands:0}],["Lagoon House","Lifestyle","golden",{trees:.8,water:1,islands:0}],["Ember Ridge","Adventure","golden",{trees:.3,water:0,islands:0}],["Moonfall Orbit","Space","midnight",{trees:.1,water:0,islands:1}]].map((a,i)=>({id:"s"+i,name:a[0],cat:a[1],plan:{title:a[0],category:a[1],atmosphere:a[2],...a[3]}}));
+const CATS=["Nature","Fantasy","Cities","Lifestyle","Adventure","Space"],PLANS=[["Free","$0","1 saved world, Low–High quality",1],["Dream Plus","$—","More saved worlds, priority queue",0],["Dream Pro","$—","Larger worlds, AI characters",0],["Dream Unlimited","$—","Unlimited worlds and sharing",0]];
+let st={cat:"Nature",atmo:"auto",plan:null,f:"All",q:"",detail:null,pg:""};
+const worlds=()=>ls.get("dm:worlds",[]);
+function save(p,name){const w=worlds();w.unshift({id:Date.now().toString(36),name:name||p.title||"Untitled dream",plan:p,t:Date.now()});ls.set("dm:worlds",w);toast("Saved to My Worlds")}
+/* ---------- pages ---------- */
+const card=(w,extra="")=>`<div class="card"><div class="thumb" style="background:${grad(w.plan.atmosphere)}"></div><b>${esc(w.name)}</b> <span class="tag">${esc(w.cat||w.plan.category||"Custom")}</span><div class="row" style="margin-top:12px">${extra}</div></div>`;
+const PG={
+home:()=>`<section class="hero"><div id="heroCv"></div><div class="in"><h1>${esc(T("tag"))}</h1><p class="muted" style="max-width:48ch">Describe a place you have always imagined. DREAMORA turns it into a 3D world you can walk through. This preview runs a built-in demo world; AI generation connects once an API is configured.</p><div class="row"><a class="btn" href="#create">${T("cta")}</a><button class="btn g" id="demo">${T("enter")} (demo)</button></div></div></section>
+<div class="sec"><h2>Featured worlds</h2><div class="grid">${SAMPLES.slice(0,3).map(w=>card(w,`<button class="btn g" data-e="${w.id}">${T("enter")}</button>`)).join("")}</div></div>
+<div class="sec"><h2>How it works</h2><div class="grid"><div class="card"><b>1. Describe</b><p class="muted">Write your dream in your own words.</p></div><div class="card"><b>2. Interpret</b><p class="muted">The AI layer turns it into a structured world plan.</p></div><div class="card"><b>3. Enter</b><p class="muted">Walk, run and jump through the result.</p></div></div></div>
+<div class="sec"><h2>Membership</h2><p class="muted">Free, Dream Plus, Dream Pro and Dream Unlimited. Payments are not enabled yet.</p><a class="btn g" href="#plans">${T("plans")}</a></div>`,
+create:()=>`<div class="sec"><h2>${T("create")}</h2><p class="muted">If an AI service is connected on the server, it interprets your dream; otherwise a built-in keyword reader is used. The result tells you which. The 3D world always uses the built-in terrain.</p>
+<textarea id="txt" maxlength="2000" placeholder="A quiet lagoon house under floating islands at sunset…" aria-label="Dream description"></textarea><p class="err" id="err" role="alert"></p>
+<div class="row" style="margin:12px 0">${CATS.map(c=>`<button class="chip ${c===st.cat?"on":""}" data-c="${c}">${c}</button>`).join("")}</div>
+<div class="row"><label>Atmosphere <select id="atm">${["auto","dawn","twilight","midnight","golden"].map(a=>`<option ${a===st.atmo?"selected":""}>${a}</option>`).join("")}</select></label><button class="btn g" id="mic">Voice (not connected yet)</button><button class="btn" id="gen">${T("generate")}</button></div><div id="out"></div></div>`,
+explore:()=>{const l=SAMPLES.filter(w=>(st.f==="All"||w.cat===st.f)&&w.name.toLowerCase().includes(st.q.toLowerCase()));if(st.detail){const w=SAMPLES.find(x=>x.id===st.detail);return `<div class="sec"><button class="btn g" id="back">← ${T("explore")}</button><h2 style="margin-top:16px">${esc(w.name)}</h2><div class="thumb" style="height:220px;background:${grad(w.plan.atmosphere)}"></div><p class="muted">${w.cat} · ${w.plan.atmosphere} atmosphere. This is a sample preset rendered on the demo terrain.</p><div class="row"><button class="btn" data-e="${w.id}">${T("enter")}</button><button class="btn g" data-s="${w.id}">${T("save")}</button></div></div>`}
+return `<div class="sec"><h2>${T("explore")}</h2><div class="row"><input id="q" type="search" placeholder="Search worlds" value="${esc(st.q)}" aria-label="Search">${["All",...CATS].map(c=>`<button class="chip ${c===st.f?"on":""}" data-f="${c}">${c}</button>`).join("")}</div><div class="grid" style="margin-top:16px">${l.map(w=>card(w,`<button class="btn g" data-d="${w.id}">Details</button><button class="btn" data-e="${w.id}">${T("enter")}</button>`)).join("")||`<p class="muted">No worlds match. Clear the search or pick All.</p>`}</div></div>`},
+worlds:()=>{const w=worlds();return `<div class="sec"><h2>${T("worlds")}</h2><div class="grid">${w.map(x=>card({...x,cat:x.plan.category},`<button class="btn" data-m="${x.id}">${T("enter")}</button><button class="btn g" data-r="${x.id}">Rename</button><button class="btn g" data-x="${x.id}">Delete</button>`)).join("")||`<div class="card"><p>No saved worlds yet.</p><a class="btn" href="#create">${T("cta")}</a></div>`}</div><p class="muted">Worlds are stored in this browser only until accounts and a database are connected.</p></div>`},
+together:()=>`<div class="sec"><h2>${T("together")} <span class="tag">Not implemented yet</span></h2><p class="muted">Multiplayer needs a realtime server and accounts. Nothing here connects to other people yet.</p><div class="grid"><div class="card"><b>Friends</b><p class="muted">No friends list: sign-in is not configured.</p></div><div class="card"><b>Invitations</b><p class="muted">Invites will appear here.</p></div><div class="card"><b>Shared world</b><p class="muted">Planned for Phase 5.</p><button class="btn" disabled>Invite (unavailable)</button></div></div></div>`,
+avatar:()=>{const c=ls.get("dm:avatar",AV0),o=(k,a)=>`<label>${k} <select data-a="${k}">${a.map(v=>`<option ${c[k]===v?"selected":""}>${v}</option>`).join("")}</select></label>`,cl=(k,l)=>`<label>${l} <input type="color" data-a="${k}" value="${c[k]}"></label>`;
+return `<div class="sec"><h2>${T("avatar")}</h2><div class="row" style="align-items:flex-start"><svg id="avs" width="180" height="260" viewBox="0 0 180 260" aria-label="Avatar preview">${avsvg(c)}</svg><div class="card" style="display:grid;gap:12px">${cl("skin","Skin")}${o("hair",["short","long","bald"])}${cl("hairc","Hair colour")}${cl("outfit","Clothing")}${o("acc",["none","halo","glasses","crown"])}<button class="btn" id="sav">${T("save")}</button></div></div></div>`},
+plans:()=>{const cur=ls.get("dm:prof",{name:"",plan:"Free"}).plan;return `<div class="sec"><h2>${T("plans")}</h2><p class="muted">Billing is not connected, so paid plans cannot be purchased yet.</p><div class="grid">${PLANS.map(p=>`<div class="card"><b>${p[0]}</b><p>${p[1]}</p><p class="muted">${p[2]}</p>${p[3]?`<button class="btn" data-p="${p[0]}" ${cur===p[0]?"disabled":""}>${cur===p[0]?"Current plan":"Choose"}</button>`:`<button class="btn g" data-w="${p[0]}">Join waitlist</button>`}</div>`).join("")}</div></div>`},
+profile:()=>{const p=ls.get("dm:prof",{name:"",plan:"Free"});return `<div class="sec"><h2>${T("profile")}</h2><div class="card" style="display:grid;gap:12px;max-width:420px"><label>Display name<br><input id="nm" maxlength="40" value="${esc(p.name)}"></label><label>Language<br><select id="lg2">${Object.keys(L).map(k=>`<option value="${k}" ${k===lang?"selected":""}>${L[k][0]}</option>`).join("")}</select></label><p class="muted">Plan: ${esc(p.plan)} · Saved worlds: ${worlds().length}<br>Sign-in and account settings need Supabase Auth, which is not configured.</p><button class="btn" id="ps">${T("save")}</button></div></div>`}};
+const avsvg=c=>`<rect x="55" y="110" width="70" height="120" rx="30" fill="${c.outfit}"/><circle cx="90" cy="75" r="38" fill="${c.skin}"/>${c.hair==="bald"?"":`<path d="M52 72a38 38 0 0 1 76 0z" fill="${c.hairc}"/>`}${c.hair==="long"?`<rect x="48" y="70" width="14" height="70" rx="7" fill="${c.hairc}"/><rect x="118" y="70" width="14" height="70" rx="7" fill="${c.hairc}"/>`:""}${c.acc==="halo"?`<ellipse cx="90" cy="26" rx="26" ry="7" fill="none" stroke="#54D9E8" stroke-width="4"/>`:c.acc==="glasses"?`<rect x="58" y="70" width="64" height="14" rx="6" fill="#111"/>`:c.acc==="crown"?`<path d="M64 40l8-22 18 14 18-14 8 22z" fill="#ffd24d"/>`:""}`;
+/* ---------- router & events ---------- */
+function route(){const h=(location.hash.slice(1)||"home");const k=PG[h]?h:"home";if(k!==st.pg){st.detail=null}st.pg=k;
+$("#nav").innerHTML=Object.keys(PG).map(p=>`<a href="#${p}" class="${p===k?"on":""}">${T(p)}</a>`).join("");document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.documentElement.lang=lang;
+$("#app").innerHTML=PG[k]()+`<footer>DREAMORA · Demo build. AI generation, accounts, payments and multiplayer are not connected.</footer>`;bind(k);scrollTo(0,0)}
+function bind(k){const A=$("#app");A.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>enterPlay(SAMPLES.find(w=>w.id===b.dataset.e).plan));
+if(k==="home"){mount($("#heroCv"));$("#demo").onclick=()=>enterPlay({atmosphere:"twilight",trees:1,water:true,islands:true});if(!gl)$("#heroCv").style.background=grad("twilight")}
+if(k==="create"){A.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{st.cat=b.dataset.c;A.querySelectorAll("[data-c]").forEach(x=>x.classList.toggle("on",x===b))});$("#atm").onchange=e=>st.atmo=e.target.value;$("#mic").onclick=()=>toast("Voice input is not connected yet. Please type your dream.");
+$("#gen").onclick=async()=>{const t=$("#txt").value.trim();$("#err").textContent="";if(t.length<10)return $("#err").textContent="Write at least 10 characters so there is something to interpret.";
+$("#gen").disabled=true;const steps=["Reading your description","Building the world plan","Assembling the demo scene"];$("#out").innerHTML=`<div class="card" style="margin-top:16px"><p class="tag" style="display:inline-block">Working on your plan</p>${steps.map((s,i)=>`<div>${s}</div><div class="bar"><i id="b${i}"></i></div>`).join("")}</div>`;
+try{const pr=AI.interpret(t,{cat:st.cat,atmo:st.atmo,lang});for(let i=0;i<3;i++){await new Promise(r=>setTimeout(r,60));$("#b"+i).style.width="100%";await new Promise(r=>setTimeout(r,800))}st.plan=await pr;
+$("#out").innerHTML=`<div class="card" style="margin-top:16px"><b>${esc(st.plan.title)}</b> <span class="tag">${esc(st.plan.source)}</span><pre>${esc(JSON.stringify(st.plan,null,1))}</pre><p class="muted">This is a plan, not a generated 3D world. It adjusts the built-in demo terrain.</p><div class="row"><button class="btn" id="pe">${T("enter")}</button><button class="btn g" id="ps2">${T("save")}</button></div></div>`;$("#pe").onclick=()=>enterPlay(st.plan);$("#ps2").onclick=()=>save(st.plan)}
+catch(e){$("#out").innerHTML=`<p class="err" role="alert">Generation failed: ${esc(e.message)}. Try again.</p>`}$("#gen").disabled=false}}
+if(k==="explore"){const q=$("#q");q&&(q.oninput=e=>{st.q=e.target.value;const p=q.selectionStart;route();const n=$("#q");n.focus();n.setSelectionRange(p,p)});A.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{st.f=b.dataset.f;route()});A.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{st.detail=b.dataset.d;route()});const bk=$("#back");bk&&(bk.onclick=()=>{st.detail=null;route()});A.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const w=SAMPLES.find(x=>x.id===b.dataset.s);save(w.plan,w.name)})}
+if(k==="worlds"){A.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>enterPlay(worlds().find(w=>w.id===b.dataset.m).plan));A.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>ask("Delete this world? This cannot be undone.",()=>{ls.set("dm:worlds",worlds().filter(w=>w.id!==b.dataset.x));toast("World deleted");route()}));
+A.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const n=prompt("New name");if(n&&n.trim()){const w=worlds();w.find(x=>x.id===b.dataset.r).name=n.trim().slice(0,60);ls.set("dm:worlds",w);route()}})}
+if(k==="avatar"){const c=ls.get("dm:avatar",AV0);A.querySelectorAll("[data-a]").forEach(i=>i.oninput=()=>{c[i.dataset.a]=i.value;$("#avs").innerHTML=avsvg(c)});$("#sav").onclick=()=>{ls.set("dm:avatar",c);if(av)setAvatar();toast("Avatar saved")}}
+if(k==="plans"){A.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{const p=ls.get("dm:prof",{name:"",plan:"Free"});p.plan=b.dataset.p;ls.set("dm:prof",p);toast("Free plan active");route()});A.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>toast("Waitlist is not connected yet. Paid plans are not available."))}
+if(k==="profile"){$("#lg2").onchange=e=>setLang(e.target.value);$("#ps").onclick=()=>{const p=ls.get("dm:prof",{name:"",plan:"Free"});p.name=$("#nm").value.trim().slice(0,40);ls.set("dm:prof",p);toast("Profile saved")}}}
+function setLang(l){lang=l;ls.set("dm:lang",l);$("#lang").value=l;route()}
+$("#lang").innerHTML=Object.keys(L).map(k=>`<option value="${k}">${L[k][0]}</option>`).join("");$("#lang").value=lang;$("#lang").onchange=e=>setLang(e.target.value);
+addEventListener("hashchange",route);init();route();
+</script></body></html>
