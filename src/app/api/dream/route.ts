@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 
-export const runtime = "nodejs";
 
 const ATMOS = ["dawn", "twilight", "midnight", "golden"];
 const CATS = ["Nature", "Fantasy", "Cities", "Lifestyle", "Adventure", "Space"];
