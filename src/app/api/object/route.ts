@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     const raw = await callModel(provider, key, model, `Language code for the name: ${lang}\nObject: ${name}\nDescription: ${brief}`);
     const j = rec(JSON.parse(raw.replace(/```json|```/g, "").trim()));
     const ids = new Set<string>();
-    const parts = (Array.isArray(j.parts) ? j.parts : []).slice(0, 60).flatMap((p) => {
+    const parts = (Array.isArray(j.parts) ? j.parts : []).slice(0, 60).flatMap((p): Record<string, unknown>[] => {
       const q = rec(p);
       if (!SHAPES.includes(String(q.shape))) return [];
       const id = typeof q.id === "string" ? q.id.replace(/[^\w-]/g, "").slice(0, 24) : "";
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     });
     if (!parts.length) throw new Error("no parts");
     let lights = 0;
-    const actions = (Array.isArray(j.actions) ? j.actions : []).slice(0, 6).flatMap((a) => {
+    const actions = (Array.isArray(j.actions) ? j.actions : []).slice(0, 6).flatMap((a): Record<string, unknown>[] => {
       const q = rec(a);
       const kind = String(q.kind);
       if (kind === "move" && ids.has(String(q.part))) return [{ kind, part: String(q.part), dpos: vec(q.dpos, -10, 10, 0), drot: vec(q.drot, -360, 360, 0), hinge: Array.isArray(q.hinge) ? vec(q.hinge, -40, 40, 0) : undefined }];
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
       if (kind === "light" && lights++ < 2) return [{ kind, pos: vec(q.pos, -40, 40, 0), color: hex(q.color, "#ffffff"), intensity: num(q.intensity, 0.2, 4, 2), range: num(q.range, 1, 30, 8) }];
       return [];
     });
-    const effects = (Array.isArray(j.effects) ? j.effects : []).slice(0, 3).flatMap((e) => {
+    const effects = (Array.isArray(j.effects) ? j.effects : []).slice(0, 3).flatMap((e): Record<string, unknown>[] => {
       const q = rec(e);
       if (!FX.includes(String(q.type))) return [];
       return [{ type: String(q.type), pos: vec(q.pos, -40, 40, 0), dir: vec(q.dir, -1, 1, 0), spread: num(q.spread, 0, 3, 0.4) }];

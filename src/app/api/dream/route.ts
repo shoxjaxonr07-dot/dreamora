@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     const trees = Math.min(1.4, Math.max(0, Number(j.trees) || 0.5));
     const aiAtmo = ATMOS.includes(String(j.atmosphere)) ? String(j.atmosphere) : "twilight";
     const objects = Array.isArray(j.objects)
-      ? j.objects.slice(0, 6).flatMap((o) => {
+      ? j.objects.slice(0, 6).flatMap((o): Record<string, unknown>[] => {
           const r = (o && typeof o === "object" ? o : {}) as Record<string, unknown>;
           if (String(r.type) === "custom") return [{ type: "custom", name: String(r.name || "object").slice(0, 40), brief: String(r.brief || r.name || "").slice(0, 300) }];
           if (!TYPES.includes(String(r.type))) return [];
