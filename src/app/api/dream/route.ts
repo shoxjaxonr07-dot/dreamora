@@ -71,8 +71,14 @@ export async function POST(req: Request) {
 
   const model = process.env.AI_MODEL || (provider === "anthropic" ? "claude-sonnet-4-6" : "gemini-2.5-flash");
   try {
-    const raw = await callModel(provider, key, model, `Language code: ${lang}\nCategory: ${cat}\nPreferred atmosphere: ${atmo}\nDream:\n${text}`);
-    const j = JSON.parse(raw.replace(/```json|```/g, "").trim()) as Record<string, unknown>;
+    const prompt = `Language code: ${lang}\nCategory: ${cat}\nPreferred atmosphere: ${atmo}\nDream:\n${text}`;
+    let j: Record<string, unknown> | null = null;
+    for (let attempt = 0; attempt < 2 && !j; attempt++) {
+      const raw = await callModel(provider, key, model, prompt);
+      const m = raw.match(/\{[\s\S]*\}/);
+      if (m) { try { j = JSON.parse(m[0]) as Record<string, unknown>; } catch { j = null; } }
+    }
+    if (!j) throw new Error("unreadable answer");
     const biomes = Array.isArray(j.biomes) ? j.biomes.filter((b) => BIOMES.includes(String(b))).map(String) : [];
     const trees = Math.min(1.4, Math.max(0, Number(j.trees) || 0.5));
     const aiAtmo = ATMOS.includes(String(j.atmosphere)) ? String(j.atmosphere) : "twilight";
@@ -99,7 +105,11 @@ export async function POST(req: Request) {
       language: lang,
       source: `AI plan (${provider})`,
     });
-  } catch {
-    return NextResponse.json({ error: "The AI service did not return a usable plan. Try again." }, { status: 502 });
+  } catch (e) {
+    const msg = String(e instanceof Error ? e.message : e).slice(0, 80);
+    if (msg.includes("provider 429")) {
+      return NextResponse.json({ error: "The AI free limit is reached. Wait a minute and try again, or try later today", detail: msg }, { status: 429 });
+    }
+    return NextResponse.json({ error: "The AI service did not return a usable plan", detail: msg }, { status: 502 });
   }
 }
