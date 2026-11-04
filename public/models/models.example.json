@@ -1,0 +1,32 @@
+{
+  "fox": {
+    "file": "fox.glb",
+    "kind": "animal",
+    "words": ["fox", "tulki"],
+    "size": 1.3,
+    "credit": "Fox credit line here"
+  },
+  "truck": {
+    "file": "truck.glb",
+    "kind": "vehicle",
+    "words": ["truck", "lorry", "yuk mashina"],
+    "size": 6.5,
+    "rotY": 180,
+    "max": 22,
+    "seat": 1.6,
+    "credit": "Truck by Zsky [CC-BY] via Poly Pizza"
+  },
+  "sportscar": {
+    "file": "sportscar.glb",
+    "kind": "vehicle",
+    "words": ["sports car", "racing car", "mashina"],
+    "size": 4.5,
+    "credit": "CAR Model by Ignition Labs [CC-BY] via Poly Pizza"
+  },
+  "treehouse": {
+    "file": "treehouse.glb",
+    "kind": "static",
+    "words": ["tree house", "daraxt uy"],
+    "size": 10
+  }
+}

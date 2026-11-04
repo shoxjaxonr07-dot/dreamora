@@ -1,0 +1,9 @@
+{
+  "fox": {
+    "file": "fox.glb",
+    "kind": "animal",
+    "words": ["fox", "tulki"],
+    "size": 1.3,
+    "credit": "\"Low Poly Fox\" by PixelMannen, rigging and animation by tomkranis, glTF conversion by AsoboStudio and scurest [CC-BY 4.0] (https://creativecommons.org/licenses/by/4.0/) via Khronos glTF Sample Assets (https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/Fox)"
+  }
+}
