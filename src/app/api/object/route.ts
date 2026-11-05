@@ -49,6 +49,18 @@ async function callModel(provider: string, key: string, model: string, prompt: s
   return d?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
 }
 
+async function callRetry(provider: string, key: string, model: string, prompt: string): Promise<string> {
+  for (let i = 0; ; i++) {
+    try {
+      return await callModel(provider, key, model, prompt);
+    } catch (e) {
+      const m = String(e instanceof Error ? e.message : e);
+      if (!/provider (500|502|503|504)/.test(m) || i >= 2) throw e;
+      await new Promise((r) => setTimeout(r, 900 * (i + 1)));
+    }
+  }
+}
+
 export async function POST(req: Request) {
   const provider = process.env.AI_PROVIDER || "";
   const key = process.env.AI_API_KEY || "";
@@ -65,7 +77,7 @@ export async function POST(req: Request) {
 
   const model = process.env.AI_MODEL || (provider === "anthropic" ? "claude-sonnet-4-6" : "gemini-2.5-flash");
   try {
-    const raw = await callModel(provider, key, model, `Language code for the name: ${lang}\nObject: ${name}\nDescription: ${brief}`);
+    const raw = await callRetry(provider, key, model, `Language code for the name: ${lang}\nObject: ${name}\nDescription: ${brief}`);
     const j = rec(JSON.parse(raw.replace(/```json|```/g, "").trim()));
     const ids = new Set<string>();
     const parts = (Array.isArray(j.parts) ? j.parts : []).slice(0, 60).flatMap((p): Record<string, unknown>[] => {

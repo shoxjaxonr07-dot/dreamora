@@ -50,6 +50,18 @@ async function callModel(provider: string, key: string, model: string, prompt: s
   return d?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
 }
 
+async function callRetry(provider: string, key: string, model: string, prompt: string): Promise<string> {
+  for (let i = 0; ; i++) {
+    try {
+      return await callModel(provider, key, model, prompt);
+    } catch (e) {
+      const m = String(e instanceof Error ? e.message : e);
+      if (!/provider (500|502|503|504)/.test(m) || i >= 2) throw e;
+      await new Promise((r) => setTimeout(r, 900 * (i + 1)));
+    }
+  }
+}
+
 export async function POST(req: Request) {
   const provider = process.env.AI_PROVIDER || "";
   const key = process.env.AI_API_KEY || "";
@@ -81,7 +93,7 @@ export async function POST(req: Request) {
     const prompt = `Language code: ${lang}\nCategory: ${cat}\nPreferred atmosphere: ${atmo}\n${ready.length ? "Ready-made models you may also use as type (use the id when the dream matches): " + ready.map((m) => m.id + " (" + m.desc + ")").join("; ") + "\n" : ""}Dream:\n${text}`;
     let j: Record<string, unknown> | null = null;
     for (let attempt = 0; attempt < 2 && !j; attempt++) {
-      const raw = await callModel(provider, key, model, prompt);
+      const raw = await callRetry(provider, key, model, prompt);
       const m = raw.match(/\{[\s\S]*\}/);
       if (m) { try { j = JSON.parse(m[0]) as Record<string, unknown>; } catch { j = null; } }
     }
