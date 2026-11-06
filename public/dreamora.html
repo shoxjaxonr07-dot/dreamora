@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png"><link rel="apple-touch-icon" href="/brand/apple-touch-icon.png"><meta name="theme-color" content="#10172C">
+<meta property="og:title" content="DREAMORA — Your Dreams. Your World. Your Reality."><meta property="og:description" content="Describe a dream. Walk, drive and fly through it in 3D."><meta property="og:type" content="website"><meta property="og:image" content="https://dreamora-two.vercel.app/brand/og.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://dreamora-two.vercel.app/brand/og.jpg">
 <title>DREAMORA — Your Dreams. Your World. Your Reality.</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -10,7 +12,21 @@ body{margin:0;background:var(--navy);color:var(--cloud);font:16px/1.55 "Bricolag
 a{color:inherit}button,select,input,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 header{position:sticky;top:0;z-index:20;display:flex;gap:16px;align-items:center;padding:12px 24px;background:rgba(16,23,44,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.logo{font-weight:800;letter-spacing:.14em;text-decoration:none;background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;text-decoration:none}
+.logo span{background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo img{height:36px;width:auto;mix-blend-mode:screen;filter:drop-shadow(0 0 8px rgba(128,101,255,.6))}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(16,23,44,.87),rgba(16,23,44,.95)),url(/brand/hero.jpg) center/cover no-repeat}
+.emb{display:block;width:min(400px,72vw);margin:0 0 14px -18px;mix-blend-mode:screen;filter:drop-shadow(0 0 22px rgba(128,101,255,.55));animation:flt 6s ease-in-out infinite}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+#splash{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#070b1e;cursor:pointer;transition:opacity .8s}
+#splash.out{opacity:0;pointer-events:none}
+#splash .bg{position:absolute;inset:0;background:url(/brand/hero.jpg) center/cover no-repeat;opacity:.9;animation:kb 9s ease-out forwards}
+#splash:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 35%,rgba(7,11,30,.75))}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.12)}}
+#splash .tg{position:relative;z-index:2;font-size:clamp(.9rem,2.2vw,1.3rem);letter-spacing:.22em;text-transform:uppercase;text-align:center;padding:0 24px;text-shadow:0 0 18px rgba(128,101,255,.9);opacity:0;animation:fi 1.2s .6s forwards}
+#splash .sk{position:absolute;z-index:2;bottom:calc(24px + env(safe-area-inset-bottom,0px));font-size:.8rem;opacity:.6}
+@keyframes fi{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.emb,#splash .bg{animation:none}}
 nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
 nav a{padding:6px 12px;border-radius:99px;text-decoration:none;white-space:nowrap;opacity:.8}
 nav a.on,nav a:hover{background:rgba(128,101,255,.25);opacity:1}
@@ -48,7 +64,8 @@ pre{background:rgba(0,0,0,.35);padding:12px;border-radius:12px;overflow:auto;fon
 footer{padding:32px;text-align:center;opacity:.6;border-top:1px solid var(--line)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
-<header><a class="logo" href="#home">DREAMORA</a><nav id="nav"></nav><select id="lang" aria-label="Language"></select></header>
+<div id="splash" role="presentation"><div class="bg"></div><img class="emb" style="position:relative;z-index:2;margin:0;width:min(560px,82vw)" src="/brand/emblem.jpg" alt="DREAMORA"><div class="tg" id="stg">Your Dreams. Your World. Your Reality.</div><div class="sk">Click to enter</div></div>
+<header><a class="logo" href="#home"><img src="/brand/emblem.jpg" alt=""><span>DREAMORA</span></a><nav id="nav"></nav><select id="lang" aria-label="Language"></select></header>
 <main id="app"></main>
 <div id="play"><div id="hud"></div></div>
 <div id="toast" role="status"></div><div id="dlg"><div class="card"><p id="dmsg"></p><div class="row"><button class="btn" id="dok">OK</button><button class="btn g" id="dno">Cancel</button></div></div></div>
@@ -264,7 +281,7 @@ function save(p,name){const w=worlds();w.unshift({id:Date.now().toString(36),nam
 const card=(w,extra="")=>`<div class="card"><div class="thumb" style="background:${grad(w.plan.atmosphere)}"></div><b translate="no">${esc(w.name)}</b> <span class="tag">${esc(w.cat||w.plan.category||"Custom")}</span><div class="row" style="margin-top:12px">${extra}</div></div>`;
 const PG={
 credits:()=>`<div class="sec"><h2>Credits</h2><p class="muted">DREAMORA uses free 3D models and open-source tools. Thank you to their authors.</p><div class="card"><b>3D models</b><div id="crl" class="muted" translate="no">…</div></div><div class="card" style="margin-top:16px"><b>Software and fonts</b><p class="muted">three.js (MIT license) · Bricolage Grotesque font (SIL Open Font License) · AI by Google Gemini</p></div></div>`,
-home:()=>`<section class="hero"><div id="heroCv"></div><div class="in"><h1>${esc(T("tag"))}</h1><p class="muted" style="max-width:48ch">Describe a place you have always imagined. DREAMORA turns it into a 3D world you can walk through. This preview runs a built-in demo world; AI generation connects once an API is configured.</p><div class="row"><a class="btn" href="#create">${T("cta")}</a><button class="btn g" id="demo">${T("enter")} (demo)</button></div></div></section>
+home:()=>`<section class="hero"><div id="heroCv"></div><div class="in"><img class="emb" src="/brand/emblem.jpg" alt="DREAMORA"><h1>${esc(T("tag"))}</h1><p class="muted" style="max-width:48ch">Describe a place you have always imagined. DREAMORA turns it into a 3D world you can walk through. This preview runs a built-in demo world; AI generation connects once an API is configured.</p><div class="row"><a class="btn" href="#create">${T("cta")}</a><button class="btn g" id="demo">${T("enter")} (demo)</button></div></div></section>
 <div class="sec"><h2>Featured worlds</h2><div class="grid">${SAMPLES.slice(0,3).map(w=>card(w,`<button class="btn g" data-e="${w.id}">${T("enter")}</button>`)).join("")}</div></div>
 <div class="sec"><h2>How it works</h2><div class="grid"><div class="card"><b>1. Describe</b><p class="muted">Write your dream in your own words.</p></div><div class="card"><b>2. Interpret</b><p class="muted">The AI layer turns it into a structured world plan.</p></div><div class="card"><b>3. Enter</b><p class="muted">Walk, run and jump through the result.</p></div></div></div>
 <div class="sec"><h2>Membership</h2><p class="muted">Free, Dream Plus, Dream Pro and Dream Unlimited. Payments are not enabled yet.</p><a class="btn g" href="#plans">${T("plans")}</a></div>`,
@@ -310,4 +327,5 @@ apply();const need=[...new Set([...ns.map(n=>n._o),...ph.map(e=>e.dataset.o)].fi
 for(let i=0;i<need.length;i+=15){const ch=need.slice(i,i+15);try{const r=await fetch("/api/translate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lang:lg,texts:ch})});if(!r.ok){if(!xerr){xerr=1;const e=await r.json().catch(()=>({}));toast("Translation unavailable: "+(e.detail||e.error||r.status))}break}const d=await r.json();ch.forEach((t,j)=>{if(d.texts&&d.texts[j])m[t]=d.texts[j]});ls.set("dm:tc",TC);apply()}catch(e){break}}}
 let xt;const ob=new MutationObserver(()=>{clearTimeout(xt);xt=setTimeout(()=>{["#app","#hud","#toast"].forEach(q=>xlate($(q)))},150)});["#app","#hud","#toast"].forEach(q=>ob.observe($(q),{childList:true,subtree:true}));
 addEventListener("hashchange",route);init();loadModels();route();
+{const sp=$("#splash");let seen=false;try{seen=sessionStorage.getItem("dm:sp")}catch(e){}if(seen)sp.remove();else{$("#stg").textContent=T("tag");const hide=()=>{sp.classList.add("out");setTimeout(()=>sp.remove(),900)};sp.onclick=hide;setTimeout(hide,3200);try{sessionStorage.setItem("dm:sp","1")}catch(e){}}}
 </script></body></html>
