@@ -10,7 +10,10 @@
     "credit": "\"Low Poly Fox\" by PixelMannen, rigging and animation by tomkranis, glTF conversion by AsoboStudio and scurest [CC-BY 4.0] (https://creativecommons.org/licenses/by/4.0/) via Khronos glTF Sample Assets (https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/Fox)"
   },
   "car": {
-    "file": "Sports Car by Quaternius - 1mkmFkAz5v.glb",
+    "file": "car.glb",
+    "alt": [
+      "Sports Car by Quaternius - 1mkmFkAz5v.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "sports car",
@@ -26,7 +29,10 @@
     "seat": 1.2
   },
   "suv": {
-    "file": "SUV by Quaternius - xsMtZhBkxL.glb",
+    "file": "suv.glb",
+    "alt": [
+      "SUV by Quaternius - xsMtZhBkxL.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "suv",
@@ -41,7 +47,10 @@
     "rotY": 180
   },
   "policecar": {
-    "file": "Police Car by Quaternius - BwwnUrWGmV.glb",
+    "file": "policecar.glb",
+    "alt": [
+      "Police Car by Quaternius - BwwnUrWGmV.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "police car",
@@ -54,7 +63,10 @@
     "rotY": 180
   },
   "truck": {
-    "file": "Truck by Zsky - EWp0hGvZPV.glb",
+    "file": "truck.glb",
+    "alt": [
+      "Truck by Zsky - EWp0hGvZPV.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "truck",
@@ -68,7 +80,10 @@
     "rotY": 180
   },
   "bus": {
-    "file": "Bus by Poly by Google - 4CPpvEmrMoF.glb",
+    "file": "bus.glb",
+    "alt": [
+      "Bus by Poly by Google - 4CPpvEmrMoF.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "bus",
@@ -81,7 +96,10 @@
     "rotY": 180
   },
   "gokart": {
-    "file": "Go kart by Poly by Google - 3hkutVs0AAV.glb",
+    "file": "gokart.glb",
+    "alt": [
+      "Go kart by Poly by Google - 3hkutVs0AAV.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "go kart",
@@ -94,7 +112,10 @@
     "rotY": 270
   },
   "motorcycle": {
-    "file": "Motorcycle by Poly by Google - dse64pqMKAR.glb",
+    "file": "motorcycle.glb",
+    "alt": [
+      "Motorcycle by Poly by Google - dse64pqMKAR.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "motorcycle",
@@ -108,7 +129,10 @@
     "rotY": 0
   },
   "bike": {
-    "file": "Bike by Zsky - NHjJnFYYCc.glb",
+    "file": "bike.glb",
+    "alt": [
+      "Bike by Zsky - NHjJnFYYCc.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "bike"
@@ -120,7 +144,10 @@
     "rotY": 0
   },
   "bicycle": {
-    "file": "Bicycle by Poly by Google - 19VoUuA2pcN.glb",
+    "file": "bicycle.glb",
+    "alt": [
+      "Bicycle by Poly by Google - 19VoUuA2pcN.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "bicycle",
@@ -134,6 +161,9 @@
   },
   "scooter": {
     "file": "scooter.glb",
+    "alt": [
+      "Scooter by jeremy - aQ_Us0oiz1.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "scooter",
@@ -146,6 +176,9 @@
   },
   "skateboard": {
     "file": "skateboard.glb",
+    "alt": [
+      "Skateboard by Poly by Google - aAjfpOZVPDd.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "skateboard",
@@ -158,7 +191,11 @@
     "rotY": 270
   },
   "vrmobil": {
-    "file": "VR-Mobil by Vladimir Ilic - 6XXj6DSBb08 (1).glb",
+    "file": "vrmobil.glb",
+    "alt": [
+      "VR-Mobil by Vladimir Ilic - 6XXj6DSBb08 (1).glb",
+      "VR-Mobil by Vladimir Ilic - 6XXj6DSBb08.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "vr mobil",
@@ -171,7 +208,10 @@
     "rotY": 270
   },
   "car2": {
-    "file": "CAR Model by Ignition Labs - 5zUWP5UsLg-.glb",
+    "file": "car2.glb",
+    "alt": [
+      "CAR Model by Ignition Labs - 5zUWP5UsLg-.glb"
+    ],
     "kind": "vehicle",
     "words": [
       "family car",
@@ -185,6 +225,9 @@
   },
   "boat": {
     "file": "boat.glb",
+    "alt": [
+      "Boat by Quaternius - 5UEI54KsuC.glb"
+    ],
     "kind": "static",
     "words": [
       "boat",
@@ -195,7 +238,11 @@
     "credit": "Boat by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/5UEI54KsuC)"
   },
   "ship": {
-    "file": "Ship by Quaternius - mEQj2wZ3GC (1).glb",
+    "file": "ship.glb",
+    "alt": [
+      "Ship by Quaternius - mEQj2wZ3GC (1).glb",
+      "Ship by Quaternius - mEQj2wZ3GC.glb"
+    ],
     "kind": "static",
     "words": [
       "ship",
@@ -207,7 +254,10 @@
     "rotY": 270
   },
   "airplane": {
-    "file": "Airplane by Poly by Google - a3XrQkLNna9.glb",
+    "file": "airplane.glb",
+    "alt": [
+      "Airplane by Poly by Google - a3XrQkLNna9.glb"
+    ],
     "kind": "static",
     "words": [
       "airplane",
@@ -219,7 +269,10 @@
     "rotY": 180
   },
   "spaceship": {
-    "file": "Spaceship by Liz Reddington - 5nWeu4IQXVX.glb",
+    "file": "spaceship.glb",
+    "alt": [
+      "Spaceship by Liz Reddington - 5nWeu4IQXVX.glb"
+    ],
     "kind": "static",
     "words": [
       "spaceship",
@@ -231,31 +284,46 @@
     "rotY": 180
   },
   "man": {
-    "file": "Man by Quaternius - HMnuH5geEG.glb",
+    "file": "man.glb",
+    "alt": [
+      "Man by Quaternius - HMnuH5geEG.glb"
+    ],
     "kind": "character",
     "size": 1.8,
     "credit": "Man by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/HMnuH5geEG)"
   },
   "hoodie": {
-    "file": "Hoodie Character by Quaternius - gKLBoRsyKe.glb",
+    "file": "hoodie.glb",
+    "alt": [
+      "Hoodie Character by Quaternius - gKLBoRsyKe.glb"
+    ],
     "kind": "character",
     "size": 1.8,
     "credit": "Hoodie Character by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/gKLBoRsyKe)"
   },
   "woman-dress": {
     "file": "woman-dress.glb",
+    "alt": [
+      "Woman in Dress by Quaternius - zMyPIQXBzq.glb"
+    ],
     "kind": "character",
     "size": 1.7,
     "credit": "Woman in Dress by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/zMyPIQXBzq)"
   },
   "woman-tank": {
     "file": "woman-tank.glb",
+    "alt": [
+      "Woman in Tank Top by Quaternius - XqzeZGB7iU.glb"
+    ],
     "kind": "character",
     "size": 1.7,
     "credit": "Woman in Tank Top by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/XqzeZGB7iU)"
   },
   "fitness": {
     "file": "fitness.glb",
+    "alt": [
+      "Fitness Character by iPoly3D - wnIFVKynES.glb"
+    ],
     "kind": "character",
     "size": 1.8,
     "credit": "Fitness Character by iPoly3D via Poly Pizza (https://poly.pizza/m/wnIFVKynES)"
