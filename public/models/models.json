@@ -21,7 +21,9 @@
       "car"
     ],
     "size": 4.5,
-    "credit": "Sports Car by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/1mkmFkAz5v)"
+    "credit": "Sports Car by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/1mkmFkAz5v)",
+    "rotY": 180,
+    "seat": 1.2
   },
   "suv": {
     "file": "SUV by Quaternius - xsMtZhBkxL.glb",
@@ -34,8 +36,9 @@
     ],
     "size": 4.8,
     "max": 24,
-    "seat": 0.8,
-    "credit": "SUV by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/xsMtZhBkxL)"
+    "seat": 1.5,
+    "credit": "SUV by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/xsMtZhBkxL)",
+    "rotY": 180
   },
   "policecar": {
     "file": "Police Car by Quaternius - BwwnUrWGmV.glb",
@@ -46,8 +49,9 @@
     ],
     "size": 4.6,
     "max": 28,
-    "seat": 0.5,
-    "credit": "Police Car by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/BwwnUrWGmV)"
+    "seat": 1.3,
+    "credit": "Police Car by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/BwwnUrWGmV)",
+    "rotY": 180
   },
   "truck": {
     "file": "Truck by Zsky - EWp0hGvZPV.glb",
@@ -59,8 +63,9 @@
     ],
     "size": 6.5,
     "max": 20,
-    "seat": 1.6,
-    "credit": "Truck by Zsky [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/EWp0hGvZPV)"
+    "seat": 1.7,
+    "credit": "Truck by Zsky [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/EWp0hGvZPV)",
+    "rotY": 180
   },
   "bus": {
     "file": "Bus by Poly by Google - 4CPpvEmrMoF.glb",
@@ -71,8 +76,9 @@
     ],
     "size": 11,
     "max": 18,
-    "seat": 2.2,
-    "credit": "Bus by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/4CPpvEmrMoF)"
+    "seat": 3.3,
+    "credit": "Bus by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/4CPpvEmrMoF)",
+    "rotY": 180
   },
   "gokart": {
     "file": "Go kart by Poly by Google - 3hkutVs0AAV.glb",
@@ -81,10 +87,11 @@
       "go kart",
       "kart"
     ],
-    "size": 2.4,
+    "size": 4,
     "max": 24,
-    "seat": 0.3,
-    "credit": "Go kart by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/3hkutVs0AAV)"
+    "seat": 0.5,
+    "credit": "Go kart by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/3hkutVs0AAV)",
+    "rotY": 270
   },
   "motorcycle": {
     "file": "Motorcycle by Poly by Google - dse64pqMKAR.glb",
@@ -94,10 +101,11 @@
       "motorbike",
       "mototsikl"
     ],
-    "size": 2.3,
+    "size": 4,
     "max": 32,
-    "seat": 0.45,
-    "credit": "Motorcycle by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/dse64pqMKAR)"
+    "seat": 1.6,
+    "credit": "Motorcycle by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/dse64pqMKAR)",
+    "rotY": 0
   },
   "bike": {
     "file": "Bike by Zsky - NHjJnFYYCc.glb",
@@ -105,10 +113,11 @@
     "words": [
       "bike"
     ],
-    "size": 2.0,
+    "size": 1.8,
     "max": 18,
-    "seat": 0.45,
-    "credit": "Bike by Zsky [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/NHjJnFYYCc)"
+    "seat": 0.9,
+    "credit": "Bike by Zsky [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/NHjJnFYYCc)",
+    "rotY": 0
   },
   "bicycle": {
     "file": "Bicycle by Poly by Google - 19VoUuA2pcN.glb",
@@ -119,11 +128,12 @@
     ],
     "size": 1.8,
     "max": 10,
-    "seat": 0.5,
-    "credit": "Bicycle by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/19VoUuA2pcN)"
+    "seat": 0.8,
+    "credit": "Bicycle by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/19VoUuA2pcN)",
+    "rotY": 90
   },
   "scooter": {
-    "file": "Scooter by jeremy - aQ_Us0oiz1.glb",
+    "file": "scooter.glb",
     "kind": "vehicle",
     "words": [
       "scooter",
@@ -135,16 +145,17 @@
     "credit": "Scooter by jeremy [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/aQ_Us0oiz1)"
   },
   "skateboard": {
-    "file": "Skateboard by Poly by Google - aAjfpOZVPDd.glb",
+    "file": "skateboard.glb",
     "kind": "vehicle",
     "words": [
       "skateboard",
       "skeyt"
     ],
-    "size": 0.85,
+    "size": 0.8,
     "max": 9,
-    "seat": 0.15,
-    "credit": "Skateboard by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/aAjfpOZVPDd)"
+    "seat": 0.2,
+    "credit": "Skateboard by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/aAjfpOZVPDd)",
+    "rotY": 270
   },
   "vrmobil": {
     "file": "VR-Mobil by Vladimir Ilic - 6XXj6DSBb08 (1).glb",
@@ -153,10 +164,11 @@
       "vr mobil",
       "vr car"
     ],
-    "size": 4.5,
+    "size": 3.7,
     "max": 26,
-    "seat": 0.4,
-    "credit": "VR-Mobil by Vladimir Ilic [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/6XXj6DSBb08)"
+    "seat": 1.6,
+    "credit": "VR-Mobil by Vladimir Ilic [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/6XXj6DSBb08)",
+    "rotY": 270
   },
   "car2": {
     "file": "CAR Model by Ignition Labs - 5zUWP5UsLg-.glb",
@@ -165,13 +177,14 @@
       "family car",
       "sedan"
     ],
-    "size": 4.5,
+    "size": 4.3,
     "max": 26,
-    "seat": 0.4,
-    "credit": "CAR Model by Ignition Labs [CC-BY] via Poly Pizza (https://poly.pizza/m/5zUWP5UsLg-)"
+    "seat": 0.6,
+    "credit": "CAR Model by Ignition Labs [CC-BY] via Poly Pizza (https://poly.pizza/m/5zUWP5UsLg-)",
+    "rotY": 180
   },
   "boat": {
-    "file": "Boat by Quaternius - 5UEI54KsuC.glb",
+    "file": "boat.glb",
     "kind": "static",
     "words": [
       "boat",
@@ -189,8 +202,9 @@
       "big ship",
       "kema"
     ],
-    "size": 22,
-    "credit": "Ship by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/mEQj2wZ3GC)"
+    "size": 16,
+    "credit": "Ship by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/mEQj2wZ3GC)",
+    "rotY": 270
   },
   "airplane": {
     "file": "Airplane by Poly by Google - a3XrQkLNna9.glb",
@@ -200,8 +214,9 @@
       "plane",
       "samolyot"
     ],
-    "size": 14,
-    "credit": "Airplane by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/a3XrQkLNna9)"
+    "size": 16,
+    "credit": "Airplane by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/a3XrQkLNna9)",
+    "rotY": 180
   },
   "spaceship": {
     "file": "Spaceship by Liz Reddington - 5nWeu4IQXVX.glb",
@@ -212,7 +227,8 @@
       "ufo"
     ],
     "size": 12,
-    "credit": "Spaceship by Liz Reddington via Poly Pizza (https://poly.pizza/m/5nWeu4IQXVX)"
+    "credit": "Spaceship by Liz Reddington via Poly Pizza (https://poly.pizza/m/5nWeu4IQXVX)",
+    "rotY": 180
   },
   "man": {
     "file": "Man by Quaternius - HMnuH5geEG.glb",
@@ -227,19 +243,19 @@
     "credit": "Hoodie Character by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/gKLBoRsyKe)"
   },
   "woman-dress": {
-    "file": "Woman in Dress by Quaternius - zMyPIQXBzq.glb",
+    "file": "woman-dress.glb",
     "kind": "character",
     "size": 1.7,
     "credit": "Woman in Dress by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/zMyPIQXBzq)"
   },
   "woman-tank": {
-    "file": "Woman in Tank Top by Quaternius - XqzeZGB7iU.glb",
+    "file": "woman-tank.glb",
     "kind": "character",
     "size": 1.7,
     "credit": "Woman in Tank Top by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/XqzeZGB7iU)"
   },
   "fitness": {
-    "file": "Fitness Character by iPoly3D - wnIFVKynES.glb",
+    "file": "fitness.glb",
     "kind": "character",
     "size": 1.8,
     "credit": "Fitness Character by iPoly3D via Poly Pizza (https://poly.pizza/m/wnIFVKynES)"
