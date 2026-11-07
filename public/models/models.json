@@ -172,7 +172,7 @@
     "size": 1.7,
     "max": 12,
     "seat": 0.3,
-    "credit": "Scooter by jeremy [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/aQ_Us0oiz1)"
+    "credit": "Scooter by jeremy [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza)"
   },
   "skateboard": {
     "file": "skateboard.glb",
@@ -235,7 +235,7 @@
       "qayiq"
     ],
     "size": 6,
-    "credit": "Boat by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/5UEI54KsuC)"
+    "credit": "Boat by Quaternius [CC0] via Poly Pizza (https://poly.pizza)"
   },
   "ship": {
     "file": "ship.glb",
@@ -308,7 +308,7 @@
     ],
     "kind": "character",
     "size": 1.7,
-    "credit": "Woman in Dress by Quaternius [CC0] via Poly Pizza (https://poly.pizza/m/zMyPIQXBzq)"
+    "credit": "Woman in Dress by Quaternius [CC0] via Poly Pizza (https://poly.pizza)"
   },
   "woman-tank": {
     "file": "woman-tank.glb",
@@ -326,6 +326,6 @@
     ],
     "kind": "character",
     "size": 1.8,
-    "credit": "Fitness Character by iPoly3D via Poly Pizza (https://poly.pizza/m/wnIFVKynES)"
+    "credit": "Fitness Character by iPoly3D via Poly Pizza (https://poly.pizza)"
   }
 }
