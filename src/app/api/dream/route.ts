@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { authCheck } from "../../../lib/auth";
 
 
 const ATMOS = ["dawn", "twilight", "midnight", "golden"];
@@ -68,8 +69,10 @@ export async function POST(req: Request) {
   if (!key || !["anthropic", "gemini"].includes(provider)) {
     return NextResponse.json({ error: "AI is not configured" }, { status: 503 });
   }
+  const who = await authCheck(req);
+  if (who === "denied") return NextResponse.json({ error: "Please sign in with Google to continue." }, { status: 401 });
   const ip = (req.headers.get("x-forwarded-for") || "unknown").split(",")[0].trim();
-  if (limited(ip)) return NextResponse.json({ error: "Too many requests. Wait a minute and try again." }, { status: 429 });
+  if (limited(typeof who === "object" ? who.id : ip)) return NextResponse.json({ error: "Too many requests. Wait a minute and try again." }, { status: 429 });
 
   let body: Record<string, unknown>;
   try { body = await req.json(); } catch { return NextResponse.json({ error: "Invalid request" }, { status: 400 }); }
